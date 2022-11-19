@@ -1,0 +1,63 @@
+version: '3'
+services:
+  numeros-express:
+    image: numeros-express
+    build:
+      context: ./ex
+      dockerfile: Dockerfile
+    container_name: numeros-express
+    expose:
+     - ${NUMEX_PORT}
+    ports:
+      - ${NUMEX_PORT}:${NUMEX_PORT}
+    environment:
+      - NUMEX_PORT=${NUMEX_PORT}
+    restart: "no"
+
+  numeros-php:
+    image: numeros-php
+    build:
+      context: ./ph
+      dockerfile: Dockerfile
+    container_name: numeros-php
+    expose:
+      - ${NUMPH_PORT}
+    ports:
+      - ${NUMPH_PORT}:${NUMPH_PORT}
+    environment:
+      - NUMPH_PORT=${NUMPH_PORT}
+    restart: "no"
+
+  numeros-python:
+    image: numeros-python
+    build:
+      dockerfile: Dockerfile
+      context: ./py\.venv
+    container_name: numeros-python
+    expose:
+      - ${NUMPY_PORT}
+    ports:
+      - ${NUMPY_PORT}:${NUMPY_PORT}
+    environment:
+      - NUMPY_PORT=${NUMPY_PORT}
+    restart: "no"
+
+  numeros-random:
+    image: numeros-random
+    build:
+      context: ./randoms
+      dockerfile: Dockerfile
+    container_name: numeros-random
+    expose:
+      - ${NUMRE_PORT}
+    ports:
+      - ${NUMRE_PORT}:${NUMRE_PORT}
+    environment:
+      - REACT_APP_NUMEX_HOST=${NUMEX_HOST}
+      - REACT_APP_NUMEX_PORT=${NUMEX_PORT}
+      - REACT_APP_NUMPY_HOST=${NUMPY_HOST}
+      - REACT_APP_NUMPY_PORT=${NUMPY_PORT}
+      - REACT_APP_NUMPH_HOST=${NUMPH_HOST}
+      - REACT_APP_NUMPH_PORT=${NUMPH_PORT}
+      - PORT=${NUMRE_PORT}
+    restart: "no"
